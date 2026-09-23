@@ -1,6 +1,6 @@
 const { addUserModel, getUserModel, getUserModelById } = require('../model/userModel');
 
-const addUsers = async (req, res) => {
+const addUsers = async (req, res, next) => {
     try {
         const { id, name, email } = req.body;
 
@@ -12,24 +12,24 @@ const addUsers = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).send(err.message);
+        return next(err)
     }
 };
 
 
-const getUsers = async (req, res) => {
+const getUsers = async (req, res, next) => {
     try {
         const [result] = await getUserModel();
 
         res.send(result);
 
     } catch (err) {
-        res.status(500).send(err.message);
+        return next(err)
     }
 };
 
 
-const getUsersById = async (req, res) => {
+const getUsersById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -38,7 +38,7 @@ const getUsersById = async (req, res) => {
         res.send(result);
 
     } catch (err) {
-        res.status(500).send(err.message);
+        return next(err)
     }
 };
 
